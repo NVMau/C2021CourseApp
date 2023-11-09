@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'courses.apps.CoursesConfig'
+    'ckeditor'
+    'ckeditor_uploader'
+
 ]
 
 MIDDLEWARE = [
@@ -84,6 +87,7 @@ DATABASES = {
         'HOST' : ''
     }
 }
+MEDIA_ROOT = '%s/courses/static/' % BASE_DIR
 AUTH_USER_MODEL = 'courses.User'
 
 # Password validation
