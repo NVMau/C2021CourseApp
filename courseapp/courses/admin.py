@@ -2,6 +2,9 @@ from django.contrib import admin
 from .models import Category, Course, Lesson, Tag
 from django.utils.html import mark_safe
 
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from django import forms
+
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('pk','name')
@@ -9,9 +12,21 @@ class CategoryAdmin(admin.ModelAdmin):
     list_filter = ['id','name']
 
 
-class CourseAdmin(admin.ModelAdmin):
-    readonly_fields = ['img']
 
+class CourseForm(forms.ModelForm):
+    description = forms.CharField(widget=CKEditorUploadingWidget)
+    class Meta:
+        model = Course
+        fields = '__all__'
+
+class TagInlineAdmin(admin.StackedInline):
+    model = Course.tags.through
+
+
+class CourseAdmin(admin.ModelAdmin):
+    readonly_fields = ['pk', 'subject', 'created_date', 'category', 'active']
+    form = CourseForm
+    inlines = [TagInlineAdmin]
     def img(self, course):
         if course:
             return mark_safe(
