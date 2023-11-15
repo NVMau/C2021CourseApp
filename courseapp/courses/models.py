@@ -23,7 +23,7 @@ class Course(BaseModel):
     subject = models.CharField(max_length=255, null= False)
     description = RichTextField()
     image = models.ImageField(upload_to='courses/%y/%m')
-    category = models.ForeignKey(Category, on_delete=models.RESTRICT)
+    category = models.ForeignKey(Category, on_delete=models.RESTRICT, related_query_name= 'courses')
     tags = models.ManyToManyField('Tag')
 
 
